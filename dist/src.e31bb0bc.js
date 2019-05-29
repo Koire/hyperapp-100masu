@@ -542,14 +542,33 @@ function keyframes(obj) {
   var rule = wrap(parse(obj, 1).join(""), "");
   return createStyle([rule], "@keyframes ");
 }
-},{}],"index.js":[function(require,module,exports) {
+},{}],"StyledComponents.js":[function(require,module,exports) {
 "use strict";
 
-var _hyperapp = require("hyperapp");
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.GridRow = void 0;
 
 var _picostyle = _interopRequireDefault(require("picostyle"));
 
+var _hyperapp = require("hyperapp");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var ps = (0, _picostyle.default)(_hyperapp.h);
+var GridRow = ps("div")({
+  display: "grid",
+  gridTemplateColumns: "repeat(11, 40px)"
+});
+exports.GridRow = GridRow;
+},{"picostyle":"../node_modules/picostyle/src/index.js","hyperapp":"../node_modules/hyperapp/src/index.js"}],"actions.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.startPuzzle = exports.createPuzzle = exports.shuffleHeaders = exports.checkAnswers = exports.sumArray = exports.changeAnswer = exports.tVal = void 0;
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
 
@@ -582,11 +601,25 @@ var randomList = function randomList() {
   return shuffle(range(10));
 };
 
-var ps = (0, _picostyle.default)(_hyperapp.h);
-var GridRow = ps("div")({
-  display: "grid",
-  gridTemplateColumns: "repeat(11, 40px)"
-});
+var createEmptyAnswers = function createEmptyAnswers() {
+  return _toConsumableArray(Array(10).keys()).map(function () {
+    return Array.from({
+      length: 10
+    }, function () {
+      return {
+        isChecked: false,
+        isCorrect: false,
+        value: 0
+      };
+    });
+  });
+};
+
+var tVal = function tVal(event) {
+  return event.target.value;
+};
+
+exports.tVal = tVal;
 
 var changeAnswer = function changeAnswer(state, _ref2) {
   var row = _ref2.row,
@@ -601,9 +634,13 @@ var changeAnswer = function changeAnswer(state, _ref2) {
   });
 };
 
+exports.changeAnswer = changeAnswer;
+
 var sumArray = function sumArray(acc, curVal) {
   return acc + curVal;
 };
+
+exports.sumArray = sumArray;
 
 var checkAnswers = function checkAnswers(state) {
   return _objectSpread({}, state, {
@@ -615,95 +652,152 @@ var checkAnswers = function checkAnswers(state) {
   });
 };
 
+exports.checkAnswers = checkAnswers;
+
 var shuffleHeaders = function shuffleHeaders(state) {
   return _objectSpread({}, state, {
     horizontal: randomList(),
-    vertical: randomList()
+    vertical: randomList(),
+    answers: createEmptyAnswers()
   });
 };
 
-var tVal = function tVal(event) {
-  return event.target.value;
+exports.shuffleHeaders = shuffleHeaders;
+
+var createPuzzle = function createPuzzle(state) {
+  return _objectSpread({}, state, {
+    horizontal: randomList(),
+    vertical: randomList(),
+    answers: createEmptyAnswers(),
+    isCreated: true
+  });
 };
+
+exports.createPuzzle = createPuzzle;
+
+var startPuzzle = function startPuzzle(state) {
+  return {};
+};
+
+exports.startPuzzle = startPuzzle;
+},{}],"RootPage.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _hyperapp = require("hyperapp");
+
+var _StyledComponents = require("./StyledComponents");
+
+var _actions = require("./actions");
+
+var _default = function _default(state) {
+  return (0, _hyperapp.h)("div", null, (0, _hyperapp.h)("div", {
+    style: {
+      display: "grid",
+      gridTemplateColumns: "200px 200px"
+    }
+  }, (0, _hyperapp.h)("h1", null, "100\u307E\u3059\u52C9\u5F37"), (0, _hyperapp.h)("h1", null, "\u6642\u9593\uFF1A", state.timeElapsed)), (0, _hyperapp.h)("br", null), (0, _hyperapp.h)("h2", null, state.score), state.isCreated && (0, _hyperapp.h)("div", {
+    style: {
+      display: "grid",
+      gridTemplateRows: "repeat(11, 40px)",
+      width: "100%",
+      height: "100%",
+      fontSize: "24px"
+    }
+  }, (0, _hyperapp.h)(_StyledComponents.GridRow, {
+    key: "home"
+  }, (0, _hyperapp.h)("div", null, "+"), state.horizontal.map(function (it) {
+    return (0, _hyperapp.h)("div", null, it);
+  })), state.vertical.map(function (it, rowIdx) {
+    return (0, _hyperapp.h)(_StyledComponents.GridRow, {
+      id: it + rowIdx
+    }, (0, _hyperapp.h)("div", null, it), state.answers[rowIdx].map(function (it2, colIdx) {
+      return (0, _hyperapp.h)("input", {
+        type: "number",
+        value: state.answers[rowIdx][colIdx].value,
+        oninput: [_actions.changeAnswer, function (e) {
+          return {
+            row: rowIdx,
+            col: colIdx,
+            value: (0, _actions.tVal)(e)
+          };
+        }]
+      });
+    }));
+  })), (0, _hyperapp.h)("div", null, state.isCreated === false && (0, _hyperapp.h)("button", {
+    onclick: _actions.createPuzzle
+  }, "create puzzle"), state.isStarted && (0, _hyperapp.h)("button", {
+    onclick: _actions.checkAnswers
+  }, "check"), state.isCreated && (0, _hyperapp.h)("button", {
+    onclick: _actions.startPuzzle
+  }, "Start Puzzle")));
+};
+
+exports.default = _default;
+},{"hyperapp":"../node_modules/hyperapp/src/index.js","./StyledComponents":"StyledComponents.js","./actions":"actions.js"}],"util.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.devMiddleWare = void 0;
+var devExtension = window.__REDUX_DEVTOOLS_EXTENSION__;
+var devTools = devExtension ? devExtension.connect() : false;
+
+var devMiddleWare = function devMiddleWare(dispatch) {
+  return devExtension ? function (action) {
+    for (var _len = arguments.length, props = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+      props[_key - 1] = arguments[_key];
+    }
+
+    if (typeof action !== 'function') {
+      return dispatch.apply(void 0, [action].concat(props));
+    } else {
+      var news = dispatch.apply(void 0, [action].concat(props));
+      devTools && devTools.send(action.name, news);
+      return news;
+    }
+  } : function (action) {
+    for (var _len2 = arguments.length, props = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+      props[_key2 - 1] = arguments[_key2];
+    }
+
+    return dispatch.apply(void 0, [action].concat(props));
+  };
+};
+
+exports.devMiddleWare = devMiddleWare;
+},{}],"index.js":[function(require,module,exports) {
+"use strict";
+
+var _hyperapp = require("hyperapp");
+
+var _RootPage = _interopRequireDefault(require("./RootPage"));
+
+var _util = require("./util");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var appSettings = {
   init: function init(_) {
     return {
-      horizontal: randomList(),
-      vertical: randomList(),
-      answers: range(10).map(function (it) {
-        return Array.from({
-          length: 10
-        }, function () {
-          return {
-            isChecked: false,
-            isCorrect: false,
-            value: 0
-          };
-        });
-      })
+      horizontal: [],
+      vertical: [],
+      answers: [],
+      timeElapsed: "00:00",
+      isCreated: false,
+      isStarted: false
     };
   },
-  view: function view(state) {
-    return (0, _hyperapp.h)("div", null, (0, _hyperapp.h)("h2", null, state.score), (0, _hyperapp.h)("button", {
-      onclick: checkAnswers
-    }, "check"), (0, _hyperapp.h)("button", {
-      onclick: shuffleHeaders
-    }, "shuffle"), (0, _hyperapp.h)("div", {
-      style: {
-        display: "grid",
-        gridTemplateRows: "repeat(11, 40px)",
-        width: "100%",
-        height: "100%",
-        fontSize: "24px"
-      }
-    }, (0, _hyperapp.h)(GridRow, {
-      key: "home"
-    }, (0, _hyperapp.h)("div", null, "+"), state.horizontal.map(function (it) {
-      return (0, _hyperapp.h)("div", null, it);
-    })), state.vertical.map(function (it, rowIdx) {
-      return (0, _hyperapp.h)(GridRow, {
-        id: it + rowIdx
-      }, (0, _hyperapp.h)("div", null, it), state.answers[rowIdx].map(function (it2, colIdx) {
-        return (0, _hyperapp.h)("input", {
-          type: "number",
-          value: state.answers[rowIdx][colIdx].value,
-          oninput: [changeAnswer, function (e) {
-            return {
-              row: rowIdx,
-              col: colIdx,
-              value: tVal(e)
-            };
-          }]
-        });
-      }));
-    })));
-  },
+  view: _RootPage.default,
   node: document.getElementById("app")
 };
-
-if ("development" !== "production") {
-  var devExtension = window.__REDUX_DEVTOOLS_EXTENSION__;
-  var devTools = devExtension ? devExtension.connect() : false;
-  (0, _hyperapp.app)(appSettings, function (dispatch) {
-    return function (action) {
-      for (var _len = arguments.length, props = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-        props[_key - 1] = arguments[_key];
-      }
-
-      if (typeof action !== 'function') {
-        return dispatch.apply(void 0, [action].concat(props));
-      } else {
-        var news = dispatch.apply(void 0, [action].concat(props));
-        devTools && devTools.send(action.name, news);
-        return news;
-      }
-    };
-  });
-} else {
-  (0, _hyperapp.app)(appSettings);
-}
-},{"hyperapp":"../node_modules/hyperapp/src/index.js","picostyle":"../node_modules/picostyle/src/index.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+"development" !== "production" ? (0, _hyperapp.app)(appSettings, _util.devMiddleWare) : (0, _hyperapp.app)(appSettings);
+},{"hyperapp":"../node_modules/hyperapp/src/index.js","./RootPage":"RootPage.js","./util":"util.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -731,7 +825,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "37199" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "43293" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
