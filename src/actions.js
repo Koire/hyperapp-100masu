@@ -6,13 +6,13 @@ const shuffle = array => {
     }
     return array;
 }
-const randomList = () => shuffle(range(10))
+export const randomList = () => shuffle(range(10))
 
-const createEmptyAnswers = () => [...Array(10).keys()].map(() =>
+export const createEmptyAnswers = () => [...Array(10).keys()].map(() =>
     Array.from({length:10},  () => ({
         isChecked: false,
         isCorrect: false,
-        value: 0
+        value: 0,
     }))
 )
 
@@ -27,29 +27,46 @@ export const changeAnswer = (state, {row, col, value}) => {
     }
 }
 export const sumArray = (acc, curVal) => acc + curVal
-export const checkAnswers = state => ({
-    ...state,
-    score: state.answers.map((row, rowIdx) =>
-        row.map((answer, colIdx) => answer.value === state.horizontal[colIdx] + state.vertical[rowIdx]
-        ).reduce(sumArray)
-    ).reduce(sumArray)
-})
-
-export const shuffleHeaders = (state) => ({
-    ...state,
-    horizontal:randomList(),
-    vertical:randomList(),
-    answers: createEmptyAnswers()
-})
+export const checkAnswers = state => {
+    return {
+        ...state,
+        score: state.answers.map((row, rowIdx) =>
+            row.map((answer, colIdx) =>
+                answer.value === state.cols[colIdx] + state.rows[rowIdx]
+            ).reduce(sumArray)
+        ).reduce(sumArray),
+        answers: state.answers.map((row, rowIdx) => (
+            row.map((answer, colIdx) =>
+                answer.value === state.rows[rowIdx]+state.cols[colIdx] ?
+                    {...answer,
+                        isChecked: true,
+                        isCorrect: true} : {
+                    ...answer,
+                        isChecked: true,
+                        isCorrect: false
+                    }
+            )
+        ))
+    }
+}
 
 export const createPuzzle = state => ({
     ...state,
-    horizontal: randomList(),
-    vertical: randomList(),
+    cols: randomList(),
+    rows: randomList(),
     answers: createEmptyAnswers(),
-    isCreated: true
+    isCreated: true,
+    isStarted: false,
 })
 
 export const startPuzzle = state => ({
-
+    ...state,
+    isStarted: true,
+    startTime: Date.now()
 })
+
+export const updateTime = (state, currentTick) => ({
+    ...state,
+    timeElapsed: Date.now() - state.startTime
+})
+export const stopPuzzle = state => ({...state, isStarted: false})

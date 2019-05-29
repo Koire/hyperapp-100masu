@@ -9,7 +9,8 @@
   },
   "dependencies": {
     "hyperapp": "2.0.0-beta.18",
-    "picostyle": "latest"
+    "picostyle": "latest",
+    "@hyperapp/time": "latest"
   },
   "devDependencies": {
     "@babel/core": "^7.4.5",
