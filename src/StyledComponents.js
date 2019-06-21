@@ -1,4 +1,4 @@
-import picostyle from "picostyle";
+import picostyle, {keyframes} from "picostyle";
 import {h} from "hyperapp";
 
 const ps = picostyle(h)
@@ -6,7 +6,15 @@ export const GridRow = ps("div")({
     display: "grid",
     gridTemplateColumns: "repeat(11, 40px)"
 })
-export const HeaderCell = ps("div")(({odd})=>({
+export const ColHeaderCell = ps("div")(({odd})=>({
+    display: "grid",
+    justifyContent: "center",
+    alignContent: "center",
+    backgroundColor: odd ? "white" : "grey" ,
+    height: "100%",
+    width: "100%"
+}))
+export const RowHeaderCell = ps("div")(({odd})=>({
     display: "grid",
     justifyContent: "center",
     alignContent: "center",
@@ -21,3 +29,6 @@ export const AnswerCell = ps("input")(({isChecked, isCorrect}) =>({
     fontSize: "18px",
     backgroundColor: isChecked ? isCorrect ? "green" : "red" : "white"
 }))
+export const RootContainer = ps("div")({
+    position: "ab"
+})

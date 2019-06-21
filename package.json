@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.html",
   "scripts": {
-    "build": "parcel build ./src/index.html --public-url ./",
-    "dev": "parcel ./src/index.html --port 8080"
+    "build": "parcel build ./index.html --public-url ./",
+    "dev": "parcel ./index.html --port 8080"
   },
   "dependencies": {
     "hyperapp": "2.0.0-beta.18",

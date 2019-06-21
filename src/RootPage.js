@@ -1,9 +1,10 @@
-import {AnswerCell, GridRow, HeaderCell} from "./StyledComponents";
+import {AnswerCell, ColHeaderCell, GridRow, RowHeaderCell} from "./StyledComponents";
 import {changeAnswer, checkAnswers, createPuzzle, startPuzzle, stopPuzzle, tVal} from "./actions";
 
 const elapsedTimeFormat = ms => (
     `${Math.floor(ms / 60 / 1000)}`.padStart(2, "0") + ":" +
-    `${(ms % (60*1000) / 1000).toFixed(0)}`.padStart(2,"0")
+    `${Math.floor((ms % (60*1000) / 1000))}`.padStart(2,"0") + "."+
+    `${Math.floor(ms%1000/10)}`.padStart(2,"0")
 )
 
 export default (state) => (
@@ -26,11 +27,11 @@ export default (state) => (
                 fontSize: "24px"
             }}>
             <GridRow id="0ne">
-                <HeaderCell key="00" odd>+</HeaderCell>
-                {state.cols.map((it,idx) => <HeaderCell id={idx} odd={idx%2}>{it}</HeaderCell>)}
+                <ColHeaderCell key="00" odd>+</ColHeaderCell>
+                {state.cols.map((it,idx) => <ColHeaderCell id={idx} odd={idx%2}>{it}</ColHeaderCell>)}
             </GridRow>
             {state.rows.map(
-                (it, rowIdx) => (<GridRow id="0ne"><HeaderCell id={it+rowIdx} odd={rowIdx%2}>{it}</HeaderCell>{state.answers[rowIdx].map(
+                (it, rowIdx) => (<GridRow id="0ne"><RowHeaderCell id={it+rowIdx} odd={rowIdx%2}>{it}</RowHeaderCell>{state.answers[rowIdx].map(
                     (it2, colIdx) => (
                         <AnswerCell type="number"
                                odd={colIdx%2}
