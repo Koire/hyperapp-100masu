@@ -10,3 +10,5 @@ export const devMiddleWare = dispatch => devExtension ? (action, ...props) => {
         return news
     }
 } : (action, ...props) => dispatch(action,...props)
+
+export const range = n => [...Array(n).keys()]

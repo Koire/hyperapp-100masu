@@ -22,13 +22,28 @@ export const RowHeaderCell = ps("div")(({odd})=>({
     height: "100%",
     width: "100%"
 }))
-export const AnswerCell = ps("input")(({isChecked, isCorrect}) =>({
+export const AnswerCell = ps("div")(({isChecked, isCorrect}) =>({
     width: "100%",
     height: "100%",
-    textAlign: "right",
-    fontSize: "18px",
+    display: "grid",
+    placeItems: "center",
+    fontSize: "24px",
     backgroundColor: isChecked ? isCorrect ? "green" : "red" : "white"
 }))
 export const RootContainer = ps("div")({
     position: "ab"
+})
+export const NumberPad = ps("div")({
+    display: "grid",
+    gridTemplateColumns: "60px 60px 60px",
+    gridAutoRows: "60px",
+    placeItems: "center",
+    fontSize: "24px",
+    backgroundColor: "white"
+})
+export const NumberButton = ps("div")({
+    height: "100%",
+    width: "100%",
+    display: "grid",
+    placeItems: "center"
 })

@@ -30,7 +30,8 @@ const appSettings = {
         answers: createEmptyAnswers(),
         timeElapsed: 0,
         isCreated: true,
-        isStarted: false
+        isStarted: false,
+        numpadIsShowing: false
     }),
     view: RootPage,
     node: document.getElementById("app"),

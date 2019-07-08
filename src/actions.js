@@ -57,6 +57,7 @@ export const createPuzzle = state => ({
     answers: createEmptyAnswers(),
     isCreated: true,
     isStarted: false,
+    score: ""
 })
 
 export const startPuzzle = state => ({

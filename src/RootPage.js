@@ -1,5 +1,6 @@
 import {AnswerCell, ColHeaderCell, GridRow, RowHeaderCell} from "./StyledComponents";
 import {changeAnswer, checkAnswers, createPuzzle, startPuzzle, stopPuzzle, tVal} from "./actions";
+import NumPad from "./NumPad";
 
 const elapsedTimeFormat = ms => (
     `${Math.floor(ms / 60 / 1000)}`.padStart(2, "0") + ":" +
@@ -7,8 +8,20 @@ const elapsedTimeFormat = ms => (
     `${Math.floor(ms%1000/10)}`.padStart(2,"0")
 )
 
+const showNumpad = (state, [x,y]) => ({
+    ...state,
+    numpadIsShowing: true,
+    currentX: state.rows[x],
+    currentY: state.cols[y],
+    currentCell:[x,y]
+})
+
 export default (state) => (
-    <div>
+    <div style={{
+        display: "grid",
+        placeItems: "center",
+        width: "100%"
+    }}>
         <div style={{
             display:"grid",
             gridTemplateColumns: "200px 250px"
@@ -16,31 +29,29 @@ export default (state) => (
             <h3>100ます勉強</h3>
             <h3>時間：{elapsedTimeFormat(state.timeElapsed)}</h3>
         </div>
+        {state.numpadIsShowing && <NumPad {...state}/>}
         <br />
         <h2>{state.score}</h2>
         {state.isCreated && <div
             style={{
                 display: "grid",
                 gridTemplateRows: "repeat(11, 40px)",
-                width: "100%",
-                height: "100%",
                 fontSize: "24px"
             }}>
-            <GridRow id="0ne">
+            <GridRow id="one">
                 <ColHeaderCell key="00" odd>+</ColHeaderCell>
                 {state.cols.map((it,idx) => <ColHeaderCell id={idx} odd={idx%2}>{it}</ColHeaderCell>)}
             </GridRow>
             {state.rows.map(
                 (it, rowIdx) => (<GridRow id="0ne"><RowHeaderCell id={it+rowIdx} odd={rowIdx%2}>{it}</RowHeaderCell>{state.answers[rowIdx].map(
                     (it2, colIdx) => (
-                        <AnswerCell type="number"
+                        <AnswerCell
                                odd={colIdx%2}
                                value={it2.value}
-                               oninput={[changeAnswer, e => ({row: rowIdx, col:colIdx, value: tVal(e)})]}
-                               disabled={(state.isStarted === false && state.isCreated === false)}
+                               onclick={[showNumpad, [rowIdx, colIdx]]}
                                isChecked={it2.isChecked}
                                isCorrect={it2.isCorrect}
-                        />)
+                        >{it2.value}</AnswerCell>)
                 )}</GridRow>))}
         </div>}
         <div>
