@@ -2,6 +2,7 @@ import picostyle, {keyframes} from "picostyle";
 import {h} from "hyperapp";
 
 const ps = picostyle(h)
+const zDepth2 = "0 4px 5px 0 rgba(0,0,0,0.14), 0 1px 10px 0 rgba(0,0,0,0.12), 0 2px 4px -1px rgba(0,0,0,0.3)"
 export const GridRow = ps("div")({
     display: "grid",
     gridTemplateColumns: "repeat(11, 40px)"
@@ -39,7 +40,8 @@ export const NumberPad = ps("div")({
     gridAutoRows: "60px",
     placeItems: "center",
     fontSize: "24px",
-    backgroundColor: "white"
+    backgroundColor: "white",
+    boxShadow: zDepth2
 })
 export const NumberButton = ps("div")({
     height: "100%",

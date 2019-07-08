@@ -13,7 +13,9 @@ const showNumpad = (state, [x,y]) => ({
     numpadIsShowing: true,
     currentX: state.rows[x],
     currentY: state.cols[y],
-    currentCell:[x,y]
+    currentCell:[x,y],
+    isStarted: true,
+    startTime: state.isStarted ? state.startTime : Date.now()
 })
 
 export default (state) => (
@@ -29,7 +31,6 @@ export default (state) => (
             <h3>100ます勉強</h3>
             <h3>時間：{elapsedTimeFormat(state.timeElapsed)}</h3>
         </div>
-        {state.numpadIsShowing && <NumPad {...state}/>}
         <br />
         <h2>{state.score}</h2>
         {state.isCreated && <div
@@ -38,6 +39,7 @@ export default (state) => (
                 gridTemplateRows: "repeat(11, 40px)",
                 fontSize: "24px"
             }}>
+            {state.numpadIsShowing && <NumPad {...state}/>}
             <GridRow id="one">
                 <ColHeaderCell key="00" odd>+</ColHeaderCell>
                 {state.cols.map((it,idx) => <ColHeaderCell id={idx} odd={idx%2}>{it}</ColHeaderCell>)}

@@ -21,6 +21,10 @@ const submitValue = (state) => {
         currentNumber: ""
 
 }}
+const hideNumPad = state => ({
+    ...state,
+    numpadIsShowing: false
+})
 
 export default ({currentNumber, currentX, currentY}) => (<div style={{
     position: "fixed",
