@@ -6,7 +6,8 @@ import {createEmptyAnswers, randomList, updateTime} from "./actions";
 
 const ToggleBlur = (state, {type}) => ({
     ...state,
-    isFocused: type === "focus"
+    isFocused: type === "focus",
+    isStarted: state.isStarted && type === "focus"
 })
 
 const fx = (dispatch, props) => {
@@ -24,15 +25,16 @@ const BlurWatcher = (props) =>  [fx, {
 
 //TODO: shuffle the current list instead of recreating it.
 const appSettings = {
-    init: () => ({
-        rows: randomList(),
-        cols: randomList(),
+    init: {
+        rows: randomList(10),
+        cols: randomList(10),
         answers: createEmptyAnswers(),
         timeElapsed: 0,
-        isCreated: true,
+        isCreated: false,
         isStarted: false,
-        numpadIsShowing: false
-    }),
+        numpadIsShowing: false,
+        size: 10,
+    },
     view: RootPage,
     node: document.getElementById("app"),
     subscriptions: state => [

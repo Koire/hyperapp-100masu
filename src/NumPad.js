@@ -35,21 +35,21 @@ export default ({currentNumber, currentX, currentY}) => (<div style={{
     display: "grid",
     placeItems: "center",
     zIndex: "5"
-}}>
+}} data-cy="numpad">
     <div style={{
         backgroundColor: "white"
     }}>
         <div style={{
             fontSize: "24px",
             textAlign: "center"
-        }}>
+        }} data-cy="currentProblem">
             {currentX} + {currentY} = {currentNumber}
         </div>
-        <NumberPad id="numpad">
-            {range(10).map(it => it > 0 && <NumberButton id={it} onclick={[buttonPush, it]}>{it}</NumberButton>)}
-            <NumberButton id="button0" onclick={[buttonPush, 0]}>0</NumberButton>
-            <NumberButton id="buttonx" onclick={deleteNumber}>X</NumberButton>
-            <NumberButton id="buttonok" onclick={submitValue}>OK</NumberButton>
+        <NumberPad id="numpad" >
+            {range(10).map(it => it > 0 && <NumberButton id={it} data-cy={`numBtn${it}`} onclick={[buttonPush, it]}>{it}</NumberButton>)}
+            <NumberButton id="button0" data-cy="numBtn0" onclick={[buttonPush, 0]}>0</NumberButton>
+            <NumberButton id="buttonx" data-cy="numBtnX"  onclick={deleteNumber}>X</NumberButton>
+            <NumberButton id="buttonok" data-cy="numBtnOk"  onclick={submitValue}>OK</NumberButton>
         </NumberPad>
     </div>
 </div>)
