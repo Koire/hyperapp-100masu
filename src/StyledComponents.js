@@ -31,23 +31,60 @@ export const AnswerCell = ps("div")(({isChecked, isCorrect}) =>({
     fontSize: "24px",
     backgroundColor: isChecked ? isCorrect ? "green" : "red" : "white"
 }))
-export const RootContainer = ps("div")({
-    position: "ab"
+export const CloseButtonX = ps("div")({
+    position: "absolute",
+    top:"-1px",
+    right:"-1px",
+    fontSize:"12px",
+    cursor: "pointer"
+})
+export const NumberPadContainer = ps("div")({
+    display: "grid",
+    borderRadius: "5px",
+    gridTemplateRows: "32px auto",
+    fontSize: "24px",
+    backgroundColor: "white",
+    boxShadow: zDepth2,
+    textAlign: "center"
 })
 export const NumberPad = ps("div")({
     display: "grid",
     gridTemplateColumns: "60px 60px 60px",
     gridAutoRows: "60px",
     placeItems: "center",
-    fontSize: "24px",
-    backgroundColor: "white",
-    boxShadow: zDepth2
 })
-export const NumberButton = ps("div")({
+export const NumberPadBackground = ps("div")({
+    position: "absolute",
+    top: "0",
+    bottom: "0",
+    right: "0",
+    left: "0",
+    display: "grid",
+    placeItems: "center",
+    zIndex: "5",
+    borderRadius: "5",
+})
+
+export const NumberButton = ps("button")({
     height: "100%",
     width: "100%",
     display: "grid",
-    placeItems: "center"
+    placeItems: "center",
+    cursor: "pointer",
+    transition: "background 0.8s",
+    backgroundPosition: "center",
+    border: "none",
+    outline: "none",
+    backgroundColor: "white",
+    fontSize: "24px",
+    ":active": {
+        backgroundColor: "#6eb9f7",
+        backgroundSize: "100%",
+        transition: "background 0s"
+    },
+    ":hover": {
+        background: " #47a7f5 radial-gradient(circle, transparent 1%, #47a7f5 1%) center/15000%"
+    }
 })
 export const OptionsLayout = ps("div")({
     display: "grid",

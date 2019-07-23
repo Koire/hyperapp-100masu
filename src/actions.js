@@ -28,7 +28,10 @@ export const showNumpad = (state, [x,y]) => ({
     startTime: state.isStarted ? state.startTime : Date.now()
 })
 
-
+export const closeNumpad = (state) => ({
+    ...state,
+    numpadIsShowing: false
+})
 export const changeAnswer = (state, {row, col, value}) => {
     const newArray = [...state.answers]
     newArray[row][col].value = Number(value)
@@ -94,3 +97,24 @@ export const resetPuzzle = state => ({
     numpadIsShowing: false,
     size: 10,
 })
+
+export const buttonPush = (state, numpadValue) => {
+    return {
+        ...state,
+        currentNumber: state.currentNumber ? state.currentNumber + `${numpadValue}` : `${numpadValue}`
+    }
+}
+export const deleteNumber = (state) => ({
+    ...state,
+    currentNumber: state.currentNumber.length > 0 ? state.currentNumber.slice(0, -1) : ""
+})
+export const submitValue = (state) => {
+    const newArray = [...state.answers]
+    newArray[state.currentCell[0]][state.currentCell[1]].value = Number(state.currentNumber)
+    return   {
+        ...state,
+        numpadIsShowing: false,
+        newArray,
+        currentNumber: ""
+
+    }}
