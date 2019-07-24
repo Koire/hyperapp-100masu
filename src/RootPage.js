@@ -23,7 +23,7 @@ export default (state) => (
             <h3>時間：{elapsedTimeFormat(state.timeElapsed)}</h3>
         </div>
         <br />
-        <h2>{state.score}</h2>
+        <h2 data-cy="score">{state.score}</h2>
         {state.isCreated && <div
             style={{
                 display: "grid",
@@ -39,7 +39,8 @@ export default (state) => (
                 {state.cols.map((it,idx) => <ColHeaderCell data-cy={`colHead${idx}`} id={idx} odd={idx%2}>{it}</ColHeaderCell>)}
             </GridRow>
             {state.rows.map(
-                (it, rowIdx) => (<GridRow size={state.size+1} id="0ne"><RowHeaderCell data-cy={`rowHead${rowIdx}`} id={it+rowIdx} odd={rowIdx%2}>{it}</RowHeaderCell>{state.answers[rowIdx].map(
+                (it, rowIdx) => (<GridRow size={state.size+1} id="0ne">
+                    <RowHeaderCell data-cy={`rowHead${rowIdx}`} id={it+rowIdx} odd={rowIdx%2}>{it}</RowHeaderCell>{state.answers[rowIdx].map(
                     (it2, colIdx) => (
                         <AnswerCell
                             data-cy={`cell${rowIdx}${colIdx}`}
@@ -52,9 +53,9 @@ export default (state) => (
                 )}</GridRow>))}
             <div>
                 {state.isCreated && <button data-cy="checkAnswerBtn" onclick={checkAnswers}>check</button>}
-                {state.isCreated && state.isStarted === false && <button onclick={startPuzzle}>Start Puzzle</button>}
-                {state.isCreated && state.isStarted && <button onclick={stopPuzzle}>Stop Puzzle</button>}
-                {state.isCreated && <button onclick={resetPuzzle}> Reset</button>}
+                {state.isCreated && state.isStarted === false && <button data-cy="startBtn" onclick={startPuzzle}>Start Puzzle</button>}
+                {state.isCreated && state.isStarted && <button data-cy="stopBtn" onclick={stopPuzzle}>Stop Puzzle</button>}
+                {state.isCreated && <button onclick={resetPuzzle} data-cy="resetBtn"> Reset</button>}
             </div>
         </div>}
 

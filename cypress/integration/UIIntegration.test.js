@@ -9,6 +9,7 @@ describe("UI Integration test", () => {
         cy.get("[data-cy=createPuzzleBtn]").click().then(obj => {
             cy.get("[data-cy=sizeControl]").should('not.exist')
         })
+        cy.screenshot()
         range(size).forEach(x => {
             range(size).forEach(y => {
                 cy.get(`[data-cy=cell${x}${y}`).click().then(dataCell => {
@@ -16,22 +17,25 @@ describe("UI Integration test", () => {
                     cy.get("[data-cy=numpad]").should('exist')
                     cy.get(`[data-cy=rowHead${x}`).then(row => {
                         cy.get(`[data-cy=colHead${y}`).then( col => {
+                            cy.log(`${x}-${y}: ${row.text()}-${col.text()}`)
                             cy.get(`[data-cy=currentProblem]`).then(problem => {
                                 sumValue = parseInt(row.text()) + parseInt(col.text())
                                 const sum = [...sumValue.toString()]
                                 let currentProblemText = problem.text()
+                                cy.log(problem.text())
                                 expect(problem.text()).to.equal(`${row.text()} + ${col.text()} = `)
                                 sum.forEach(char => {
                                     currentProblemText += char
                                     cy.get(`[data-cy=numBtn${char}]`).click(btn => {
                                         expect(btn).to.have.css('background-color', "#6eb9f7")
+                                    }).should("not.have.class", "active").then(() => {
                                         expect(problem.text()).to.equal(currentProblemText)
                                     })
                                 })
-                                cy.get("[data-cy=numBtnOk]").click(() => {
-                                    expect(parseInt(dataCell.text())).to.equal(sumValue)
-                                })
                             })
+                        })
+                        cy.get("[data-cy=numBtnOk]").click(() => {
+                            expect(parseInt(dataCell.text())).to.equal(sumValue)
                         })
                     })
                 })

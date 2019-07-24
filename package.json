@@ -8,9 +8,9 @@
     "dev": "parcel ./index.html --port 8080"
   },
   "dependencies": {
-    "hyperapp": "2.0.0-beta.18",
-    "picostyle": "latest",
-    "@hyperapp/time": "latest"
+    "@hyperapp/time": "latest",
+    "hyperapp": "^2.0.0-beta.22",
+    "picostyle": "latest"
   },
   "devDependencies": {
     "@babel/core": "^7.4.5",
