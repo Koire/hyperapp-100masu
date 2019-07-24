@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c2e649d0-bebe-418d-ba8a-bd89ade2a717" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/cypress/integration/CompleteGame.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cypress.json" beforeDir="false" afterPath="$PROJECT_DIR$/cypress.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cypress/integration/UIIntegration.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/cypress/integration/UIIntegration.test.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/RootPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/RootPage.js" afterDir="false" />
-    </list>
+    <list default="true" id="c2e649d0-bebe-418d-ba8a-bd89ade2a717" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,8 +41,8 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/cypress/integration/CompleteGame.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="521">
-                  <caret line="71" column="6" selection-start-line="71" selection-start-column="6" selection-end-line="71" selection-end-column="6" />
+                <state relative-caret-position="969">
+                  <caret line="69" column="59" selection-start-line="69" selection-start-column="59" selection-end-line="69" selection-end-column="59" />
                 </state>
               </provider>
             </entry>
@@ -141,10 +133,11 @@
   <component name="PhpServers">
     <servers />
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="y" value="-5" />
-    <option name="width" value="1920" />
-    <option name="height" value="1085" />
+  <component name="ProjectFrameBounds" extendedState="7">
+    <option name="x" value="311" />
+    <option name="y" value="92" />
+    <option name="width" value="1440" />
+    <option name="height" value="820" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -263,16 +256,15 @@
       <workItem from="1562558030199" duration="6766000" />
       <workItem from="1562826789222" duration="1198000" />
       <workItem from="1563279456179" duration="799000" />
-      <workItem from="1563762058111" duration="23047000" />
+      <workItem from="1563762058111" duration="23318000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="74585000" />
+    <option name="totallyTimeSpent" value="74856000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="-5" width="1920" height="1085" extended-state="6" />
-    <editor active="true" />
+    <frame x="0" y="-5" width="1920" height="1085" extended-state="7" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.15795091" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -452,8 +444,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/cypress/integration/CompleteGame.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="521">
-          <caret line="71" column="6" selection-start-line="71" selection-start-column="6" selection-end-line="71" selection-end-column="6" />
+        <state relative-caret-position="969">
+          <caret line="69" column="59" selection-start-line="69" selection-start-column="59" selection-end-line="69" selection-end-column="59" />
         </state>
       </provider>
     </entry>
